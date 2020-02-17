@@ -4,7 +4,7 @@
 	"description": "Recognize Chinese text in images and translate it to Vietnamese",
 	"permissions": ["activeTab", "<all_urls>"],
 	"background": {
-		"scripts": ["background.js"],
+		"scripts": ["background.js", "config.js"],
 		"persistent": false
 	},
 	"browser_action": {

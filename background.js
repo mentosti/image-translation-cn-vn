@@ -54,7 +54,7 @@ function imageTranslate(imgEncode, title) {
 
 		xhr.open(
 			"POST",
-			"https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDUw6N2mw1rCBTGxrNGqjBUcT4smWAk_vI"
+			"https://vision.googleapis.com/v1/images:annotate?key=" + key
 		);
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.onerror = function() {
