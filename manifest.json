@@ -1,11 +1,14 @@
 {
-    "name": "Image Translation CN-VN",
-    "version": "1.0",
-    "description": "Recognize Chinese text in images and translate it to Vietnamese",
-    "permissions": [],
-    "background": {
-      "scripts": ["background.js"],
-      "persistent": false
-    },
-    "manifest_version": 2
+	"name": "Image Translation CN-VN",
+	"version": "1.0",
+	"description": "Recognize Chinese text in images and translate it to Vietnamese",
+	"permissions": ["activeTab", "<all_urls>"],
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
+	},
+	"browser_action": {
+		"default_title": "Translate"
+	},
+	"manifest_version": 2
 }
