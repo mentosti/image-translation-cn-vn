@@ -94,5 +94,8 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 		.then(a => imageTranslate(a, sender.tab.title))
 		.then(cn => translateToVn(cn))
 		.then(vn => alert(vn.data))
+		.then(done => chrome.tabs.insertCSS({ file: "style.css" }, function() {
+			chrome.tabs.executeScript({ file: "insert.js" });
+		}))
 		.catch(e => window.alert(e.message || e));
 });
