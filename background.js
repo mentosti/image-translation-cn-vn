@@ -36,7 +36,7 @@ function imageTranslate(imgEncode, title) {
 				{
 					image: { content: imgEncode.split("base64,")[1] },
 					features: [{ type: "TEXT_DETECTION" }],
-					imageContext: { languageHints: ["zh"] }
+					// imageContext: { languageHints: ["zh"] }
 				}
 			]
 		});
@@ -54,7 +54,7 @@ function imageTranslate(imgEncode, title) {
 
 		xhr.open(
 			"POST",
-			"https://vision.googleapis.com/v1/images:annotate?key=" + key
+			"https://vision.googleapis.com/v1/images:annotate?key=" + key1
 		);
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.onerror = function() {
@@ -65,7 +65,13 @@ function imageTranslate(imgEncode, title) {
 }
 function translateToVn(cn) {
 	return new Promise(function(resolve, reject) {
-		var data = "t=" + cn + "&tt=vi";
+		var data = {
+			q: [
+				cn
+			],
+			format: "text",
+			target: "en"
+		};
 
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
@@ -75,13 +81,14 @@ function translateToVn(cn) {
 				resolve(JSON.parse(this.responseText));
 			}
 		});
-
-		xhr.open("POST", "http://dichtienghoa.com/transtext");
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		console.log(key2);
+		// xhr.open("POST", "http://dichtienghoa.com/transtext");
+		xhr.open("POST", "https://translation.googleapis.com/language/translate/v2?key=" + key2);
+		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.onerror = function() {
-			reject("Failed to translate to Vietnamese!");
+			reject("Failed to translate!");
 		};
-		xhr.send(data);
+		xhr.send(JSON.stringify(data));
 	});
 }
 chrome.browserAction.onClicked.addListener(function(tab) {
@@ -93,7 +100,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 	capture(request)
 		.then(a => imageTranslate(a, sender.tab.title))
 		.then(cn => translateToVn(cn))
-		.then(vn => alert(vn.data))
+		.then(vn => alert(vn.data.translations[0].translatedText))
 		.then(done => chrome.tabs.insertCSS({ file: "style.css" }, function() {
 			chrome.tabs.executeScript({ file: "insert.js" });
 		}))

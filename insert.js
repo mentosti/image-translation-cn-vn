@@ -1,7 +1,7 @@
 //credit to Web Clipper - Easy Screenshot 
 //github: https://github.com/schomery/easy-screenshot
 try {
-    capture.remove();
+  capture.remove();
 	guide.remove();
 	monitor.remove();
 } catch {}
